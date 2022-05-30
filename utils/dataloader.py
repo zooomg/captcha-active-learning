@@ -19,7 +19,14 @@ class CaptchaDataset(Dataset):
         y = []
         for filename in glob.glob(path+'/*'):
             x.append(filename)
-            y.append(filename.split('/')[2].split('.')[0])
+            y_str = filename.split('/')[-1].split('.')[0]
+            if self.isSelection:
+                ids = self.str_to_selection(y_str)
+            else:
+                ids = self.str_to_id(y_str)
+            y.append(ids)
+            
+        
         return x, y
     
     def str_to_id(self, y):
@@ -54,10 +61,10 @@ class CaptchaDataset(Dataset):
         img.close()
         
         y = self.y[idx]
-        if self.isSelection:
-            ids = self.str_to_selection(y)
-        else:
-            ids = self.str_to_id(y)
-        ids = torch.tensor(ids)
+        # if self.isSelection:
+        #     ids = self.str_to_selection(y)
+        # else:
+        #     ids = self.str_to_id(y)
+        y = torch.tensor(y)
         
-        return image, ids
+        return image, y
