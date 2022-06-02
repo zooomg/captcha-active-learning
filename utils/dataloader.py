@@ -7,11 +7,12 @@ import cv2 as cv
 import numpy as np
 
 class CaptchaDataset(Dataset):
-    def __init__(self, path, isSelection=False, transform=transforms.ToTensor(), isGrayscale=False, isCrop=False, isFilter=False):
+    def __init__(self, path, isSelection=False, transform=transforms.ToTensor(), isGrayscale=False, isCrop=False, isFilter=False, isResize=False):
         self.transform = transform
         self.isCrop = isCrop
         self.isFilter = isFilter
         self.isSelection = isSelection
+        self.isResize = isResize
         self.x, self.y = self.loadlist(path)
     
     def loadlist(self, path):
@@ -19,13 +20,12 @@ class CaptchaDataset(Dataset):
         y = []
         for filename in glob.glob(path+'/*'):
             x.append(filename)
-            y_str = filename.split('/')[-1].split('.')[0]
+            y_str = filename.split('\\')[-1].split('.')[0]
             if self.isSelection:
                 ids = self.str_to_selection(y_str)
             else:
                 ids = self.str_to_id(y_str)
             y.append(ids)
-            
         
         return x, y
     
@@ -56,6 +56,8 @@ class CaptchaDataset(Dataset):
             image = image[85:170,:,:]
         if self.isFilter:
             image = cv.medianBlur(image, 5)
+        if self.isResize:
+            image = cv.resize(image, (128, 42))
         img = Image.fromarray(image)
         image = self.transform(img)
         img.close()
