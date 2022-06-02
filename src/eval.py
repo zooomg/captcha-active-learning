@@ -67,5 +67,18 @@ def evaluate(model, test_dataloader, experiment, args):
     print(f"accuracy={accuracy}")
 
     if args.wandb:
-        experiment.log({"test_loss": current_losses, "test_accuracy": accuracy})
+        experiment.log(
+            {
+                "test_loss_1": current_losses[0], 
+                "test_loss_2": current_losses[1], 
+                "test_loss_3": current_losses[2], 
+                "test_loss_4": current_losses[3], 
+                "test_loss_5": current_losses[4], 
+                "test_accuracy_1": accuracy[0],
+                "test_accuracy_2": accuracy[1],
+                "test_accuracy_3": accuracy[2],
+                "test_accuracy_4": accuracy[3],
+                "test_accuracy_5": accuracy[4],
+            }
+        )
     # return current_losses, current_loss, accuracy, mean_accuracy

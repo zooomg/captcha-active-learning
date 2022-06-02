@@ -51,7 +51,15 @@ def train(model, train_dataloader, experiment, desc, args):
         print(f"current loss={current_loss:.4f}")
         print(f"current losses={current_losses}")
         if args.wandb:
-            experiment.log({"train_loss": current_losses})
+            experiment.log(
+                {
+                    "train_loss_1": current_losses[0],
+                    "train_loss_2": current_losses[1],
+                    "train_loss_3": current_losses[2],
+                    "train_loss_4": current_losses[3],
+                    "train_loss_5": current_losses[4],
+                }
+            )
         # plt.figure(figsize=(20,1),dpi=120)
         # plt.scatter(np.arange(len(loss_history)), loss_history, label='train')
         # plt.legend(loc=1)
