@@ -1,10 +1,5 @@
 import numpy as np
 
-"""
-todo: median 코드 확인
-"""
-
-
 # Random sampling
 def random_sampling(y_pred_prob, n_samples):
     return np.random.choice(range(len(y_pred_prob)), n_samples)
