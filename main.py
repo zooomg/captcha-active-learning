@@ -153,7 +153,8 @@ if __name__ == '__main__':
             "uncertain_criteria": args.uncertain_criteria,
             "maximum_iterations": args.maximum_iterations,
             "fine_tunning_interval": args.fine_tunning_interval,
-            "initial_annotated_perc": args.initial_annotated_perc
+            "initial_annotated_perc": args.initial_annotated_perc,
+            "digit_compression": args.digit_compression
         })
 
     print(json.dumps({
@@ -164,7 +165,8 @@ if __name__ == '__main__':
             "uncertain_criteria": args.uncertain_criteria,
             "maximum_iterations": args.maximum_iterations,
             "fine_tunning_interval": args.fine_tunning_interval,
-            "initial_annotated_perc": args.initial_annotated_perc
+            "initial_annotated_perc": args.initial_annotated_perc,
+            "digit_compression": args.digit_compression
     }, indent=4))
         
     dataset = CaptchaDataset(args.data_path, isFilter=True, isCrop=True)
