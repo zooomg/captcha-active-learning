@@ -46,6 +46,8 @@ def get_args():
                         help="Location of dataset. default: \'./Large_Captcha_Dataset\'")
     parser.add_argument('-wandb', default=False, action="store_true",
                         help="Do you wanna use wandb? just give it True! default:False")
+    parser.add_argument('-dc', '--digit_compression', default='mean',
+                        help="Compress five digits to one.(mean, median) default: \'mean\'")
     args = parser.parse_args()
     
     return args
@@ -81,19 +83,19 @@ def get_y_pred_probs(model, du, args):
     y_pred_probs = np.transpose(y_pred_probs, (0, 2, 1, 3)).reshape(-1, 5, 62)
     return y_pred_probs
 
-def get_uncertain_samples(y_pred_prob, n_samples, criteria):
+def get_uncertain_samples(y_pred_prob, n_samples, criteria, option='mean'):
     if criteria == 'lc':
-        return least_confidence(y_pred_prob, n_samples)
+        return least_confidence(y_pred_prob, n_samples, option)
     elif criteria == 'ms':
-        return margin_sampling(y_pred_prob, n_samples)
+        return margin_sampling(y_pred_prob, n_samples, option)
     elif criteria == 'en':
-        return entropy(y_pred_prob, n_samples)
+        return entropy(y_pred_prob, n_samples, option)
     elif criteria == 'rs':
         return None, random_sampling(y_pred_prob, n_samples)
     elif criteria == 'bvsb':
-        return bvsb(y_pred_prob, n_samples)
+        return bvsb(y_pred_prob, n_samples, option)
     elif criteria == 'pmes':
-        return pmes(y_pred_prob, n_samples)
+        return pmes(y_pred_prob, n_samples, option)
     else:
         raise ValueError(
             'Unknown criteria value \'%s\', use one of [\'rs\',\'lc\',\'ms\',\'en\',\'bvsb\',\'pmes\']' % criteria)
@@ -107,7 +109,7 @@ def run_active_learning(args, experiment, dl, du, dtest):
         
         print("model predictions obtained")
 
-        _, un_idx = get_uncertain_samples(y_pred_probs, args.uncertain_samples_size, criteria=args.uncertain_criteria)
+        _, un_idx = get_uncertain_samples(y_pred_probs, args.uncertain_samples_size, criteria=args.uncertain_criteria, option=args.digit_compression)
         
         print("uncertain samples obtained")
         
