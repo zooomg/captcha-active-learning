@@ -145,7 +145,7 @@ if __name__ == '__main__':
     args = get_args()
     experiment = None
     if args.wandb:
-        experiment = wandb.init(project="captcha-active-learning", entity="zooomg", config={
+        experiment = wandb.init(project="test-project", entity="captcha-active-learning-jinro", config={
             "learning_rate": 1e-5,
             "epochs": args.epochs,
             "sample_size": args.uncertain_samples_size,
