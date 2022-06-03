@@ -169,7 +169,7 @@ if __name__ == '__main__':
             "digit_compression": args.digit_compression
     }, indent=4))
         
-    dataset = CaptchaDataset(args.data_path, isFilter=True, isCrop=True)
+    dataset = CaptchaDataset(args.data_path, isFilter=True, isCrop=True, isResize=True)
     print('dataset loaded')
     
     random_seed = 123
