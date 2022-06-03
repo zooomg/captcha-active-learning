@@ -120,7 +120,8 @@ def run_active_learning(args, experiment, dl, du, dtest):
         print("dl upated")
         
         for val in un_idx:
-            du.sampler.indices.remove(val)
+            if val in du.sampler.indices:
+                du.sampler.indices.remove(val)
         
         print("du updated")
                         
