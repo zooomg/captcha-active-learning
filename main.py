@@ -12,7 +12,7 @@ import os
 import argparse
 import wandb
 import json
-
+import random
 
 from model.resnet import resnet152, resnet34, resnet18
 from utils.dataloader import CaptchaDataset
@@ -184,6 +184,7 @@ if __name__ == '__main__':
     validation_split_size = int(np.floor((dataset_size-test_split) * validation_split)) # 8232
     
     if shuffling_dataset:
+        random.seed(random_seed)
         np.random.seed(random_seed)
         np.random.shuffle(indices)
         torch.manual_seed(random_seed)
