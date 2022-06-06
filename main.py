@@ -1,6 +1,6 @@
 import torch
 from torch.utils.data import DataLoader
-from torch.utils.data.sampler import SubsetRandomSampler
+from torch.utils.data.sampler import SubsetRandomSampler, SequentialSampler
 import torch.nn as nn
 import matplotlib.pyplot as plt
 from tqdm import tqdm
@@ -189,9 +189,15 @@ if __name__ == '__main__':
     train_indices, test_indices = indices[test_split_size:], indices[:test_split_size]
     train_indices, val_indices = train_indices[validation_split_size:], train_indices[:validation_split_size]
     
-    train_sampler = SubsetRandomSampler(train_indices) # 57631
-    valid_sampler = SubsetRandomSampler(val_indices) # 8232
-    test_sampler = SubsetRandomSampler(test_indices) # 16465
+    if shuffling_dataset:
+        torch.manual_seed(random_seed)
+        train_sampler = SubsetRandomSampler(train_indices) # 57631
+        valid_sampler = SubsetRandomSampler(val_indices) # 8232
+        test_sampler = SubsetRandomSampler(test_indices) # 16465
+    else:
+        train_sampler = SequentialSampler(train_indices) # 57631
+        valid_sampler = SequentialSampler(val_indices) # 8232
+        test_sampler = SequentialSampler(test_indices) # 16465
     
     du = DataLoader(dataset, batch_size=args.batch_size, sampler=train_sampler)
     dl = DataLoader(dataset, batch_size=args.batch_size, sampler=valid_sampler)
