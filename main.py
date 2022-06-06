@@ -188,6 +188,7 @@ if __name__ == '__main__':
         np.random.shuffle(indices)
         torch.manual_seed(random_seed)
         torch.cuda.manual_seed(random_seed)
+        torch.cuda.manual_seed_all(random_seed) # if use multi-GPU
         torch.backends.cudnn.deterministic = True
         torch.backends.cudnn.benchmark = False
     train_indices, test_indices = indices[test_split_size:], indices[:test_split_size]
