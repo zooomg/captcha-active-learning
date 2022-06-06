@@ -186,19 +186,17 @@ if __name__ == '__main__':
     if shuffling_dataset:
         np.random.seed(random_seed)
         np.random.shuffle(indices)
+        torch.manual_seed(random_seed)
+        torch.cuda.manual_seed(random_seed)
+        torch.backends.cudnn.deterministic = True
+        torch.backends.cudnn.benchmark = False
     train_indices, test_indices = indices[test_split_size:], indices[:test_split_size]
     train_indices, val_indices = train_indices[validation_split_size:], train_indices[:validation_split_size]
-    
-    if shuffling_dataset:
-        torch.manual_seed(random_seed)
-        train_sampler = SubsetRandomSampler(train_indices) # 57631
-        valid_sampler = SubsetRandomSampler(val_indices) # 8232
-        test_sampler = SubsetRandomSampler(test_indices) # 16465
-    else:
-        train_sampler = SequentialSampler(train_indices) # 57631
-        valid_sampler = SequentialSampler(val_indices) # 8232
-        test_sampler = SequentialSampler(test_indices) # 16465
-    
+        
+    train_sampler = SubsetRandomSampler(train_indices) # 57631
+    valid_sampler = SubsetRandomSampler(val_indices) # 8232
+    test_sampler = SubsetRandomSampler(test_indices) # 16465
+
     du = DataLoader(dataset, batch_size=args.batch_size, sampler=train_sampler)
     dl = DataLoader(dataset, batch_size=args.batch_size, sampler=valid_sampler)
     dtest = DataLoader(dataset, batch_size=args.batch_size, sampler=test_sampler)
