@@ -203,6 +203,9 @@ class ResNet(nn.Module):
         y5 = self.fc5(x)
 
         return y1, y2, y3, y4, y5
+    
+def resnet18(pretrained=False, progress=True, **kwargs):
+    return ResNet(BasicBlock, [2, 2, 2, 2], **kwargs)
 
 
 def resnet34(pretrained=False, progress=True, **kwargs):
