@@ -14,7 +14,7 @@ import wandb
 import json
 
 
-from model.resnet import resnet152, resnet34
+from model.resnet import resnet152, resnet34, resnet18
 from utils.dataloader import CaptchaDataset
 from utils.criteria import *
 from src.train import *
@@ -30,7 +30,7 @@ def get_args():
                         help="Verbosity mode. 0 = silent, 1 = progress bar, 2 = one line per epoch. default: 0")
     parser.add_argument('-epochs', default=5, type=int, help="Number of epoch to train. default: 5")
     parser.add_argument('-batch_size', default=1, type=int, help="Number of samples per gradient update. default: 1")
-    parser.add_argument('-chkt_filename', default='./weights/ResNet34-CAPTCHA_ceal', help="Model Checkpoint filename to save. default: \'./weights/ResNet34-CAPTCHA_ceal\'")
+    parser.add_argument('-chkt_filename', default='./weights/ResNet18-CAPTCHA_ceal', help="Model Checkpoint filename to save. default: \'./weights/ResNet18-CAPTCHA_ceal\'")
     parser.add_argument('-t', '--fine_tunning_interval', default=1, type=int, help="Fine-tuning interval. default: 1")
     parser.add_argument('-T', '--maximum_iterations', default=29, type=int,
                         help="Maximum iteration number. default: 29")
@@ -55,7 +55,7 @@ def get_args():
 def initialize_model(init_dataloader, test_dataloader, args, experiment):
     path = f'{args.chkt_filename}_init.pt'
     device = f'cuda:{args.gpu_number}'
-    model = resnet34()
+    model = resnet18()
     if CUDA:
         model = model.to(device)
     if os.path.exists(path):
@@ -146,7 +146,7 @@ if __name__ == '__main__':
     args = get_args()
     experiment = None
     if args.wandb:
-        experiment = wandb.init(project="test-project", entity="captcha-active-learning-jinro", config={
+        experiment = wandb.init(project="real-project", entity="captcha-active-learning-jinro", config={
             "learning_rate": 1e-5,
             "epochs": args.epochs,
             "sample_size": args.uncertain_samples_size,
