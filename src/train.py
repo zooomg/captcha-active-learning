@@ -10,7 +10,7 @@ def train(model, train_dataloader, experiment, desc, args):
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.AdamW(model.parameters(), lr=1e-5)
     
-    model_path = f'{args.chkt_filename}_{args.uncertain_criteria}.pt'
+    model_path = f'{args.chkt_filename}_{args.uncertain_criteria}_{args.digit_compression}.pt'
     device = f'cuda:{args.gpu_number}'
     
     min_loss = 20.

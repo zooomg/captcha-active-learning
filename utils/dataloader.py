@@ -18,9 +18,10 @@ class CaptchaDataset(Dataset):
     def loadlist(self, path):
         x = []
         y = []
+        print(path)
         for filename in glob.glob(path+'/*'):
             x.append(filename)
-            y_str = filename.split('\\')[-1].split('.')[0]
+            y_str = filename.split('/')[-1].split('.')[0] # split
             if self.isSelection:
                 ids = self.str_to_selection(y_str)
             else:
