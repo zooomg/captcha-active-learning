@@ -48,6 +48,8 @@ def get_args():
                         help="Do you wanna use wandb? just give it True! default:False")
     parser.add_argument('-dc', '--digit_compression', default='mean',
                         help="Compress five digits to one.(mean, median) default: \'mean\'")
+    parser.add_argument('-pn', '--project_name', required=True,
+                        help="Set wandb project name")
     args = parser.parse_args()
     
     return args
@@ -146,7 +148,7 @@ if __name__ == '__main__':
     args = get_args()
     experiment = None
     if args.wandb:
-        experiment = wandb.init(project="1-epoch", entity="captcha-active-learning-jinro", config={
+        experiment = wandb.init(project=args.project_name, entity="captcha-active-learning-jinro", config={
             "learning_rate": 1e-5,
             "epochs": args.epochs,
             "sample_size": args.uncertain_samples_size,
