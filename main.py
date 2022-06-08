@@ -53,7 +53,7 @@ def get_args():
     return args
 
 def initialize_model(init_dataloader, test_dataloader, args, experiment):
-    path = f'{args.chkt_filename}_init.pt'
+    path = f'{args.chkt_filename}_init_{args.epochs}_epochs.pt'
     device = f'cuda:{args.gpu_number}'
     model = resnet18()
     if CUDA:
@@ -146,7 +146,7 @@ if __name__ == '__main__':
     args = get_args()
     experiment = None
     if args.wandb:
-        experiment = wandb.init(project="real-project", entity="captcha-active-learning-jinro", config={
+        experiment = wandb.init(project="1-epoch", entity="captcha-active-learning-jinro", config={
             "learning_rate": 1e-5,
             "epochs": args.epochs,
             "sample_size": args.uncertain_samples_size,
