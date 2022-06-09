@@ -55,7 +55,7 @@ def get_args():
     return args
 
 def initialize_model(init_dataloader, test_dataloader, args, experiment):
-    path = f'{args.chkt_filename}_init_{args.epochs}_epochs.pt'
+    path = f'{args.chkt_filename}_init_{args.epochs}_epochs_{args.uncertain_samples_size}.pt'
     device = f'cuda:{args.gpu_number}'
     model = resnet18()
     if CUDA:
