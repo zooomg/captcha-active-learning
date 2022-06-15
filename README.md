@@ -1,6 +1,4 @@
 # captcha-active-learning
-
-2022-1 빅데이터처리 과목 Active learning 텀프로젝트
 - 문제 설정: [Large Captcha Dataset](https://www.kaggle.com/datasets/akashguna/large-captcha-dataset)에 active learning 기법 적용해보기
 - 데이터셋
   - 5개의 문자를 나타내는 image
